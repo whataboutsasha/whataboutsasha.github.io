@@ -23,24 +23,28 @@
 		<style>
 
 		.sticky {
+			display: grid;
+			align-items: center;
+			justify-content: start;
+			align-content: center;
 			width: auto;
 			height: 100px;
 		}
 
 		#name {
  	 		overflow: hidden;
-			font-size: 40px;
-			font-weight: 600;
 			padding: 10px 5px 5px 10px;
 			font-family: 'Outfit', sans-serif;
+			font-size: 40px;
+			font-weight: 600;
 		}
 
 		#description {
 			overflow: hidden;
-			font-size: 20px;
-    			font-weight: 400;
 			padding: 0px 0px 0px 10px;			
 			font-family: 'Outfit', sans-serif;
+			font-size: 30px;
+			font-weight: 400;
 		}
 		
 		.center {
@@ -61,6 +65,55 @@
 
 		.block:hover {
 			opacity: 0.9;
+		}
+
+		.contact {
+			width: auto;
+    			height: 100px;
+			font-family: 'Outfit', sans-serif;
+			font-size: 30px;
+			font-weight: 400;
+		}
+
+		#mail {
+			font-family: 'Outfit', sans-serif;
+			font-size: 30px;
+			font-weight: 200;
+		}
+
+		#mail:hover {
+			text-decoration: underline;
+			text-decoration-thickness: 1px;
+			text-decoration-style: dashed;
+		}
+
+		@media screen and (max-width: 700px) {
+
+			.sticky {
+				display: grid;
+				align-items: center;
+				justify-content: start;
+				align-content: center;
+				width: auto;
+				height: 100px;
+			}
+
+			#name {
+ 	 			overflow: hidden;
+				font-size: 30px;
+				font-weight: 600;
+				padding: 10px 5px 5px 10px;
+				font-family: 'Outfit', sans-serif;
+			}
+
+			#description {
+				overflow: hidden;
+				font-size: 20px;
+    				font-weight: 400;
+				padding: 0px 0px 0px 10px;			
+				font-family: 'Outfit', sans-serif;
+			}
+			
 		}
 		
 		</style>
@@ -95,6 +148,18 @@
 			</div>
 			
 			<div class="block">
+
+			</div>
+
+			<div class="contact">
+
+				Contact:
+
+				<span id="mail"> 
+
+					whataboutsasha@gmail.com
+
+				</span>
 
 			</div>
 
