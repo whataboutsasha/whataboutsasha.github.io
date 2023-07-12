@@ -18,12 +18,63 @@
 		
 		<!-- jquery -->
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+		<script> 
+
+			jQuery(document).ready(function() {
+				var mouseX = 0, mouseY = 0;
+ 			 	var xp = 0, yp = 0;
+
+				$(document).mousemove(function(e){
+					mouseX = e.pageX - 30;
+					mouseY = e.pageY - 30; 
+				});
+
+				setInterval(function(){
+					xp += ((mouseX - xp)/4);
+					yp += ((mouseY - yp)/4);
+					$("#circle").css({left: xp +'px', top: yp +'px'});
+				}, 20);
+
+				$(".circle").css("opacity", "0.0");
+
+				$(".block").hover(
+				function() {
+					var circle = $(".circle");
+					circle.css("opacity", "0.5");
+					circle.animate({width: '20px', height: '20px'}, 100);
+					circle.animate({width: '20px', height: '20px'}, 100);
+					circle.animate({width: '25px', height: '25px'}, 100);
+				}, function() {
+					var circle = $(".circle");
+					circle.css("opacity", "0.0");
+					circle.css({width: '20px', height: '20px'});
+				});
+			});
+
+		</script>
 
 		<!-- style -->
 		<style>
 
 		body {
 			margin: 0px;
+		}
+
+		.circle {
+			position: absolute;
+ 			border: solid 2px white;
+			background-color: white;
+			opacity: 0.5;
+			width: 20px; 
+			height: 20px;
+			transform: translate(15px, 15px);
+  			border-radius: 50%;
+			pointer-events: none;
+			transition: opacity 0.1s ease-out;
+		}
+
+		#hide {
+			opacity: 0.0;
 		}
 
 		.sticky {
@@ -68,7 +119,7 @@
 		}
 
 		.block:hover {
-			opacity: 0.9;
+			opacity: 1;
 		}
 
 		.contact {
@@ -85,12 +136,18 @@
 			font-family: 'Outfit', sans-serif;
 			font-size: 30px;
 			font-weight: 200;
+			text-decoration: underline;
+			text-decoration-thickness: 1px;
+			text-decoration-style: dashed;
+			text-decoration-color: transparent;
+			transition: text-decoration-color 0.1s ease-out;
 		}
 
 		#mail:hover {
 			text-decoration: underline;
 			text-decoration-thickness: 1px;
 			text-decoration-style: dashed;
+			text-decoration-color: black;
 		}
 
 		@media screen and (max-width: 700px) {
@@ -137,6 +194,7 @@
 	</head>
 
 	<body>
+		<span id="circle" class="circle"></span>
 
 		<div class="center">
 			
