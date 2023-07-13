@@ -65,7 +65,8 @@
 						$(this).animate({height: '400px'}, 250),
 						$('.header').animate({height: '100px'}, 250),
 						$('#name').animate({opacity: '1.0'}, 100),
-						$('#description').animate({opacity: '1.0'}, 250);
+						$('#description').animate({opacity: '1.0'}, 250),
+						$([document.documentElement, document.body]).animate({scrollTop: $('html').offset().top }, 250);
 				});
 
 				// toggle lit
@@ -75,7 +76,8 @@
 						$([document.documentElement, document.body]).animate({
         scrollTop: $('#lit').offset().top - 20 }, 250);
 					else
-						$(this).animate({height: '400px'}, 250);
+						$(this).animate({height: '400px'}, 250),
+						$([document.documentElement, document.body]).animate({scrollTop: $(this).offset().top - 150 }, 250);
 				});
 
 				// toggle afisha
@@ -85,7 +87,8 @@
 						$([document.documentElement, document.body]).animate({
         scrollTop: $('#afisha').offset().top - 20 }, 250);
 					else
-						$(this).animate({height: '400px'}, 250);
+						$(this).animate({height: '400px'}, 250),
+						$([document.documentElement, document.body]).animate({scrollTop: $(this).offset().top - 150 }, 250);
 				});
 
 			});
