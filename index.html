@@ -56,7 +56,7 @@
 				$('#clos').click(function() { 
 					if ($(this).css('height') == '400px')					
 						$('.sticky').animate({height: '0px'}, 250),
-						$('#description').animate({opacity: '0.0'}, 150),
+						$('#description').animate({opacity: '0.0'}, 100),
 						$('#name').animate({opacity: '0.0'}, 250),
 						$(this).animate({height: '600px'}, 250),
 						$([document.documentElement, document.body]).animate({
@@ -64,7 +64,7 @@
 					else
 						$(this).animate({height: '400px'}, 250),
 						$('.sticky').animate({height: '100px'}, 250),
-						$('#name').animate({opacity: '1.0'}, 150),
+						$('#name').animate({opacity: '1.0'}, 100),
 						$('#description').animate({opacity: '1.0'}, 250);
 				});
 
@@ -259,7 +259,7 @@
 
 				<div id="description">
 
-					Profy mega stinker
+					Professional mega stinker
 				</div>
 
 			</div>
