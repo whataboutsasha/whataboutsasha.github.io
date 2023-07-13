@@ -55,7 +55,7 @@
 				// toggle clos
 				$('#clos').click(function() { 
 					if ($(this).css('height') == '400px')					
-						$('.sticky').animate({height: '0px'}, 250),
+						$('.header').animate({height: '0px'}, 250),
 						$('#description').animate({opacity: '0.0'}, 100),
 						$('#name').animate({opacity: '0.0'}, 250),
 						$(this).animate({height: '95vh'}, 250),
@@ -63,7 +63,7 @@
         scrollTop: $('html').offset().top + 10 }, 250);
 					else
 						$(this).animate({height: '400px'}, 250),
-						$('.sticky').animate({height: '100px'}, 250),
+						$('.header').animate({height: '100px'}, 250),
 						$('#name').animate({opacity: '1.0'}, 100),
 						$('#description').animate({opacity: '1.0'}, 250);
 				});
@@ -116,7 +116,7 @@
 			opacity: 0.0;
 		}
 
-		.sticky {
+		.header {
 			display: grid;
 			align-items: center;
 			justify-content: start;
@@ -171,6 +171,50 @@
 
 		.block:hover {
 			opacity: 1;
+		}
+
+		.block_layout {
+			display: flex;
+			justify-content: space-between;
+			gap: 10px;
+			width: auto;
+			height: 100%;
+			background-color: transparent;
+		}
+
+		.preview_text {
+			display: grid;
+			align-items: center;
+    			align-content: space-between;
+			gap: 0px;
+			padding: 40px 40px 40px 40px;
+			max-width: 50%;
+			font-family: 'Outfit', sans-serif;
+			font-size: 20px;
+			text-align: left;
+			color: white;
+			font-weight: 300;
+		}
+
+		.preview_image {
+			object-fit: contain;
+			max-width: 50%;
+			font-family: 'Outfit', sans-serif;
+			font-size: 20px;
+			text-align: left;
+			color: white;
+			font-weight: 300;
+			border-start-end-radius: 5px;
+    			border-end-end-radius: 5px;
+		}
+
+
+		#project_name {
+			font-family: 'Outfit', sans-serif;
+			font-size: 30px;
+			text-align: left;
+			color: white;
+			font-weight: 500;
 		}
 
 		.contact {
@@ -249,7 +293,7 @@
 
 		<div class="center">
 			
-			<div class="sticky">
+			<div class="header">
 
 				<div id="name">
 
@@ -265,6 +309,26 @@
 			</div>
 
 			<button class="block" id="clos">
+
+				<div class="block_layout">
+
+					<div class="preview_text">
+
+						<span id="project_name"> CLOS </span>
+
+						<br>
+						<br>
+
+						As the stinky SMM managers, users will navigate a virtual world of stench, where they'll be tasked with developing and executing strategic social media campaigns for a variety of "stinky" businesses.
+
+					</div>
+
+					<img class="preview_image" src="img/1.png" alt="src">
+						
+					</img>
+
+
+				</div>
 
 			</button>
 
