@@ -38,7 +38,7 @@
 				$(".circle").css("opacity", "0.0");
 
 				$(".block").hover(
-				function() {
+					function() {
 					var circle = $(".circle");
 					circle.css("opacity", "0.5");
 					circle.animate({width: '20px', height: '20px'}, 100);
@@ -49,6 +49,33 @@
 					circle.css("opacity", "0.0");
 					circle.css({width: '20px', height: '20px'});
 				});
+
+				// toggle clos
+				$("#clos").click(function() { 
+					if ($(this).css('height') == '400px')
+						$('.sticky').animate({height: '0px', opacity: '0.0'}, 250),
+						$(this).animate({height: '600px'}, 250);
+					else
+						$(this).animate({height: '400px'}, 250),
+						$('.sticky').animate({height: '100px', opacity: '1.0'}, 250);
+				});
+
+				// toggle lit
+				$("#lit").click(function() { 
+					if ($(this).css('height') == '400px')
+						$(this).animate({height: '600px'}, 250);
+					else
+						$(this).animate({height: '400px'}, 250);
+				});
+
+				// toggle afisha
+				$("#afisha").click(function() { 
+					if ($(this).css('height') == '400px')
+						$(this).animate({height: '600px'}, 250);
+					else
+						$(this).animate({height: '400px'}, 250);
+				});
+
 			});
 
 		</script>
@@ -115,8 +142,20 @@
     			margin: 0px 0px 0px 0px;
    			padding: 0px 0px 0px 0px;
    			background-color: black;
+			border: none;
     			border-radius: 7px;
 		}
+
+		.open {
+			width: auto;
+    			height: 800px;
+    			margin: 0px 0px 0px 0px;
+   			padding: 0px 0px 0px 0px;
+   			background-color: black;
+			border: none;
+    			border-radius: 7px;
+		}
+
 
 		.block:hover {
 			opacity: 1;
@@ -213,17 +252,17 @@
 
 			</div>
 
-			<div class="block">
+			<button class="block" id="clos">
 
-			</div>
+			</button>
 
-			<div class="block">
+			<button class="block" id="lit">
 
-			</div>
+			</button>
 			
-			<div class="block">
+			<button class="block" id="clos">
 
-			</div>
+			</button>
 
 			<div class="contact">
 
