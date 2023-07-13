@@ -51,17 +51,22 @@
 				});
 
 				// toggle clos
-				$("#clos").click(function() { 
+				$('#clos').click(function() { 
 					if ($(this).css('height') == '400px')
-						$('.sticky').animate({height: '0px', opacity: '0.0'}, 250),
+
+						$('.sticky').animate({height: '0px'}, 250),
+						$('#description').animate({opacity: '0.0'}, 150),
+						$('#name').animate({opacity: '0.0'}, 250),
 						$(this).animate({height: '600px'}, 250);
 					else
 						$(this).animate({height: '400px'}, 250),
-						$('.sticky').animate({height: '100px', opacity: '1.0'}, 250);
+						$('.sticky').animate({height: '100px'}, 250),
+						$('#name').animate({opacity: '1.0'}, 150),
+						$('#description').animate({opacity: '1.0'}, 250);
 				});
 
 				// toggle lit
-				$("#lit").click(function() { 
+				$('#lit').click(function() { 
 					if ($(this).css('height') == '400px')
 						$(this).animate({height: '600px'}, 250);
 					else
@@ -69,7 +74,7 @@
 				});
 
 				// toggle afisha
-				$("#afisha").click(function() { 
+				$('#afisha').click(function() { 
 					if ($(this).css('height') == '400px')
 						$(this).animate({height: '600px'}, 250);
 					else
@@ -260,7 +265,7 @@
 
 			</button>
 			
-			<button class="block" id="clos">
+			<button class="block" id="afisha">
 
 			</button>
 
