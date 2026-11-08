@@ -38,7 +38,8 @@ const Tagline = styled(motion.span)`
 // The bar itself lives in FloatingNav and is positioned over this slot.
 const ButtonsSlot = styled.div`
   margin-top: clamp(2rem, 5vw, 3.5rem);
-  height: 4.5rem;
+  /* Hero button height: their text size (see FloatingNav) times ~3.25 */
+  height: calc(clamp(1.15rem, 1.7vw, 1.6rem) * 3.3);
 `;
 
 const ease = [0.22, 1, 0.36, 1];

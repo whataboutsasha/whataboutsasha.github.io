@@ -6,14 +6,16 @@ import { motion, AnimatePresence } from "framer-motion";
 // below. The page decides when to show it (see page.js).
 
 const Bubble = styled(motion.div)`
-  /* Sits inside the mobile dots strip (48px tall), to the right of the dots */
+  /* Sits inside the mobile dots strip (48px tall), to the right of the dots,
+     vertically centred on the dots row */
   position: fixed;
   right: 20px;
-  bottom: 10px;
+  bottom: 12px;
+  height: 24px;
   z-index: 1001;
   display: grid;
   place-items: center;
-  color: var(--accent);
+  color: var(--highlight-color); /* same as the selected dot */
   pointer-events: none;
 `;
 
@@ -36,7 +38,7 @@ export const ScrollHint = ({ show }) => (
           strokeWidth="2.2"
           strokeLinecap="round"
           strokeLinejoin="round"
-          animate={{ y: [0, 4, 0] }}
+          animate={{ y: [-2, 2, -2] }}
           transition={{ duration: 1.1, repeat: Infinity, ease: 'easeInOut' }}
         >
           <path d="M8 2.5v11M3.5 9 8 13.5 12.5 9" />
