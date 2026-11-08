@@ -1,7 +1,7 @@
 'use client'
 import styled from "styled-components";
 import { about } from "@/content/site";
-import { SlideFrame, SlideInner, SectionHeading, BodyText, Reveal, Placeholder } from "../primitives";
+import { SlideFrame, SlideInner, SectionHeading, BodyText, Reveal, Placeholder, MOBILE } from "../primitives";
 
 const Grid = styled.div`
   display: grid;
@@ -9,26 +9,31 @@ const Grid = styled.div`
   gap: clamp(1.5rem, 4vw, 4rem);
   align-items: center;
 
-  /* Tablet and mobile: one column, text first, smaller picture after it */
+  /* Tablet and mobile: one column, picture first (smaller), then the text */
   @media (max-width: 1100px) {
-    grid-template-columns: 1fr;
-    gap: 2rem;
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: start;
+    gap: 1.75rem;
   }
 `;
 
 const Picture = styled(Reveal)`
-  @media (max-width: 1100px) {
-    order: 2;
-    width: 100%;
-    max-width: 420px;
+  width: 100%;
 
+  @media (max-width: 1100px) {
+    max-width: 420px;
     > div { aspect-ratio: 4 / 3; }
+  }
+
+  @media ${MOBILE} {
+    max-width: none;
   }
 `;
 
 const Text = styled(Reveal)`
+  width: 100%;
+
   @media (max-width: 1100px) {
-    order: 1;
     max-width: 680px;
   }
 `;

@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { motion } from "framer-motion";
 import { hero } from "@/content/site";
 import { SlideFrame, SlideInner, MOBILE } from "../primitives";
-import { NavButtons } from "../FloatingNav";
 
 const HeroFrame = styled(SlideFrame)`
   @media ${MOBILE} {
@@ -35,18 +34,16 @@ const Tagline = styled(motion.span)`
   line-height: 1.1;
 `;
 
-// Fixed height so the slide doesn't jump when the buttons fly off to the corner.
+// Empty space where the floating button bar sits (big) while the hero is on screen.
+// The bar itself lives in FloatingNav and is positioned over this slot.
 const ButtonsSlot = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
   margin-top: clamp(2rem, 5vw, 3.5rem);
-  min-height: 4.5rem;
+  height: 4.5rem;
 `;
 
 const ease = [0.22, 1, 0.36, 1];
 
-export const Hero = ({ showButtons, onNavigate }) => (
+export const Hero = ({ slotRef }) => (
   <HeroFrame id="home">
     <SlideInner>
       <Title>
@@ -57,9 +54,7 @@ export const Hero = ({ showButtons, onNavigate }) => (
           {hero.tagline}
         </Tagline>
       </Title>
-      <ButtonsSlot>
-        {showButtons && <NavButtons size="big" onNavigate={onNavigate} />}
-      </ButtonsSlot>
+      <ButtonsSlot ref={slotRef} aria-hidden="true" />
     </SlideInner>
   </HeroFrame>
 );

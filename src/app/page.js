@@ -2,7 +2,8 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import { MOBILE } from "@/ui/primitives";
-import { CornerNav, NavButtons } from "@/ui/FloatingNav";
+import { FloatingNav } from "@/ui/FloatingNav";
+import { ScrollHint } from "@/ui/ScrollHint";
 import { Hero } from "@/ui/slides/Hero";
 import { Book } from "@/ui/slides/Book";
 import { About } from "@/ui/slides/About";
@@ -104,14 +105,20 @@ const Dot = styled.button`
 
 export default function Home() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [atStart, setAtStart] = useState(true);
+  const [showScrollHint, setShowScrollHint] = useState(false); // mobile only
   const layoutRef = useRef(null);
+  const heroSlotRef = useRef(null);
 
-  // The active slide is the last one whose start has passed the middle of the screen.
-  // Works for both the vertical (desktop) and horizontal (mobile) layout.
   useEffect(() => {
     const layout = layoutRef.current;
     if (!layout) return;
+    let frame = 0;
+
     const update = () => {
+      frame = 0;
+      // The active slide is the last one whose start has passed the middle of the screen.
+      // Works for both the vertical (desktop) and horizontal (mobile) layout.
       const midX = window.innerWidth / 2;
       const midY = window.innerHeight / 2;
       let index = 0;
@@ -120,13 +127,24 @@ export default function Home() {
         if (r && r.top <= midY && r.left <= midX) index = i;
       });
       setActiveIndex(index);
+      // The button bar leaves the hero as soon as the page starts moving away from it.
+      setAtStart(Math.max(layout.scrollTop, layout.scrollLeft) < 40);
+
+      // Mobile: show a down arrow on slides with more content below, until the visitor scrolls a bit.
+      const el = document.getElementById(slides[index].id);
+      const hasMore = el.scrollHeight - el.clientHeight > 24;
+      setShowScrollHint(window.matchMedia(MOBILE).matches && hasMore && el.scrollTop < 24);
     };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+
     update();
-    layout.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
+    // capture: also catches each slide's own vertical scrolling on mobile
+    layout.addEventListener('scroll', schedule, { passive: true, capture: true });
+    window.addEventListener('resize', schedule);
     return () => {
-      layout.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
+      cancelAnimationFrame(frame);
+      layout.removeEventListener('scroll', schedule, { capture: true });
+      window.removeEventListener('resize', schedule);
     };
   }, []);
 
@@ -134,21 +152,18 @@ export default function Home() {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start', inline: 'start' });
   }, []);
 
-  const onHero = activeIndex === 0;
-
   return (
     <>
       <Layout ref={layoutRef}>
-        <Hero showButtons={onHero} onNavigate={scrollToSlide} />
+        <Hero slotRef={heroSlotRef} />
         <Book />
         <About />
         <Faq />
         <Contact />
       </Layout>
 
-      <CornerNav aria-label="Quick links">
-        {!onHero && <NavButtons size="small" onNavigate={scrollToSlide} />}
-      </CornerNav>
+      <FloatingNav onHero={atStart} slotRef={heroSlotRef} onNavigate={scrollToSlide} />
+      <ScrollHint show={showScrollHint} />
 
       <DotsBar aria-label="Slides">
         <DotsColumn>
