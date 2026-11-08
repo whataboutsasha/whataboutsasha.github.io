@@ -9,8 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@babel/runtime": "^7.25.6",
+    "framer-motion": "^11.9.0",
+    "next": "14.2.13",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.13"
+    "styled-components": "^6.1.13"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^2.1.4"
   }
 }
