@@ -6,13 +6,10 @@ import { hero } from "@/content/site";
 
 // One fixed button bar: big inside the hero's button slot, small in the top-right corner.
 //
-// Smooth: the flight between the two spots is a transform-only animation (move + zoom),
-// which iPhone Safari animates smoothly, and the bar zooms as one piece so nothing distorts.
-//
-// Crisp: zoomed text is blurry (Safari stretches a bitmap of the text), so the zoom is only
-// used during the flight. When the bar lands, its real font size is switched to the target
-// size and the zoom reset to 1 in the same frame. Everything inside is sized in em, so the
-// switch is visually seamless and the resting bar is always rendered at true size.
+// The flight between the two spots animates the bar's real font size (everything inside is
+// sized in em) together with its position. No zoom/scale is ever used, so the text is real,
+// crisp text on every frame and there is no swap at the end that could jump. The bar is
+// isolated with CSS containment, so re-rendering it each frame only touches these two buttons.
 
 const CORNER_FONT_REM = 0.8;
 const spring = { type: 'spring', stiffness: 260, damping: 30, mass: 0.9 };
@@ -29,7 +26,7 @@ const Bar = styled.nav`
   display: flex;
   gap: 0.5em;
   font-size: ${CORNER_FONT_REM}rem;
-  transform-origin: 0 0;
+  contain: layout paint style;
   opacity: 0;
   transition: opacity 0.6s 0.35s;
 `;
@@ -54,7 +51,7 @@ const NavButton = styled.a`
 
 export const FloatingNav = ({ onHero, slotRef, onNavigate }) => {
   const barRef = useRef(null);
-  // What is currently on screen: position, zoom, and the real font size (px).
+  // What is currently on screen: position and font size (px).
   const current = useRef(null);
   const [spots, setSpots] = useState(null);
 
@@ -92,35 +89,30 @@ export const FloatingNav = ({ onHero, slotRef, onNavigate }) => {
     if (!spots) return;
     const bar = barRef.current;
     const target = onHero ? spots.hero : spots.corner;
-    // All visual state is written here, in one place, so font and zoom always change together.
+    // All visual state is written here, in one place.
     const paint = (state) => {
       current.current = state;
       bar.style.fontSize = `${state.font}px`;
-      bar.style.transform = `translate3d(${state.x}px, ${state.y}px, 0) scale(${state.scale})`;
+      bar.style.transform = `translate3d(${state.x}px, ${state.y}px, 0)`;
     };
 
-    // First placement: jump straight into position at true size, then fade in (CSS transition).
+    // First placement: jump straight into position, then fade in (CSS transition).
     if (!current.current) {
-      paint({ ...target, scale: 1 });
+      paint(target);
       bar.style.opacity = '1';
       return;
     }
 
-    // Fly from what is on screen now: move, and zoom from the current real font size
-    // towards the target size. On landing, swap the zoom for the real font size in the
-    // same frame, so the resting bar is always rendered at true size (crisp text).
+    // Fly from what is on screen now: position and real font size move together.
     const from = current.current;
-    const fromZoom = from.scale;
-    const toZoom = target.font / from.font;
     const flight = animate(0, 1, {
       ...spring,
       onUpdate: (p) => paint({
         x: from.x + (target.x - from.x) * p,
         y: from.y + (target.y - from.y) * p,
-        scale: fromZoom + (toZoom - fromZoom) * p,
-        font: from.font,
+        font: from.font + (target.font - from.font) * p,
       }),
-      onComplete: () => paint({ ...target, scale: 1 }),
+      onComplete: () => paint(target),
     });
     return () => flight.stop();
   }, [spots, onHero]);
