@@ -26,7 +26,9 @@ const Bar = styled.nav`
   display: flex;
   gap: 0.5em;
   font-size: ${CORNER_FONT_REM}rem;
-  contain: layout paint style;
+  /* layout containment keeps per-frame re-rendering local to the bar.
+     No paint containment: it would clip the buttons' shadow into a grey box. */
+  contain: layout style;
   opacity: 0;
   transition: opacity 0.6s 0.35s;
 `;
